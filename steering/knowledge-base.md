@@ -56,6 +56,70 @@ curl -X POST "https://api.lalayunssl.xyz/v1/chat/completions" \
 
 ---
 
+## Kiro CLI 配置同步方案 (2026-01-19)
+
+### 仓库结构
+```
+~/.kiro/kiro-config/
+├── settings/cli.json    # CLI 配置（符号链接到 ~/.kiro/settings/）
+├── steering/            # Steering 文件（符号链接到 ~/.kiro/steering/）
+├── agents/              # 自定义 agents（预留）
+├── setup.sh             # 新电脑初始化脚本
+└── sync.sh              # 同步工具（安装为 kiro-sync）
+```
+
+### 新电脑初始化
+```bash
+curl -fsSL https://raw.githubusercontent.com/moonjoke001/kiro-config/main/setup.sh | bash
+cp ~/.kiro/kiro-config/sync.sh ~/.local/bin/kiro-sync
+chmod +x ~/.local/bin/kiro-sync
+```
+
+### 日常同步
+```bash
+kiro-sync  # 交互式菜单：推送/拉取/查看状态
+```
+
+### 关键技术
+- **符号链接**：配置文件自动同步到 Git 仓库
+- **GitHub CLI**：使用 `gh` 认证，避免 token 管理
+- **仓库地址**：https://github.com/moonjoke001/kiro-config
+
+---
+
+## Kiro CLI 工具自动批准 (2026-01-19)
+
+### 问题
+重启 Kiro CLI 后仍提示工具确认，配置文件无法实现自动批准
+
+### 解决方案
+配置文件**不支持**自动批准，需使用以下方法之一：
+
+1. **启动参数**（推荐）：
+   ```bash
+   kiro-cli chat -a
+   # 或
+   kiro-cli chat --trust-all-tools
+   ```
+
+2. **别名方案**（最方便）：
+   ```bash
+   echo "alias kiro='kiro-cli chat -a'" >> ~/.bashrc
+   source ~/.bashrc
+   ```
+
+3. **会话命令**（临时）：
+   ```
+   /tools trust-all
+   ```
+
+### 注意事项
+- `chat.trustAllTools` 配置项**无效**
+- `chat.autoApproveTools` 配置项**不存在**
+- 参考文档：https://kiro.dev/docs/cli/chat/permissions/
+
+---
+
 ## 模板：新知识条目
 
 ### [标题] (日期)
