@@ -24,6 +24,7 @@ echo "创建符号链接..."
 # Settings
 if [ -f "$CONFIG_DIR/settings/cli.json" ]; then
     mkdir -p "$KIRO_DIR/settings"
+    rm -f "$KIRO_DIR/settings/cli.json"
     ln -sf "$CONFIG_DIR/settings/cli.json" "$KIRO_DIR/settings/cli.json"
     echo "  ✓ settings/cli.json"
 fi
