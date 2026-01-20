@@ -3,5 +3,5 @@
   "chat.enableCheckpoint": true,
   "chat.enableKnowledge": true,
   "mcp.loadedBefore": true,
-  "chat.trustAllTools": true
+  "chat.autoApproveTools": true
 }
